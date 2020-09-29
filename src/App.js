@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchRootCategories } from './actions';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  static propTypes = {
+    rootCategories: PropTypes.array.isRequired,
+    dispatch: PropTypes.func.isRequired,
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchRootCategories());
+  }
+
+  render() {
+    const { rootCategories } = this.props;
+    return (
+      <div className="App">
+        { rootCategories.map(item => (
+          <li key={item._id}>
+            <span><b>{item.CategoryName}</b></span>
+          </li>
+        ))}
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  const { categoriesReducer } = state;
+  const { rootCategories } = categoriesReducer;
+
+  return {
+    rootCategories
+  }
+}
+
+export default connect(mapStateToProps)(App);
