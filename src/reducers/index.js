@@ -19,6 +19,7 @@ const categoriesReducer = (state = initialState, action) => {
             rootCategories.forEach(category => {
                 const { _id: id, CategoryName } = category;
                 rootCategoriesObject[id] = {
+                    ...rootCategoriesObject[id],
                     CategoryName
                 };
             });
@@ -32,6 +33,7 @@ const categoriesReducer = (state = initialState, action) => {
 
             rootCategoriesObject = state.rootCategories;
             rootCategoriesObject[id] = {
+                ...rootCategoriesObject[id],
                 subcategories,
             }
 
