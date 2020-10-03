@@ -20,9 +20,15 @@ class App extends Component {
     return (
       <div className="App">
         { rootCategories.map(item => (
-          <li key={item._id}>
-            <span><b>{item.CategoryName}</b></span>
-          </li>
+          <div key={item.id}>
+            <span><b>{item.id}</b></span>:::
+            <span><span><b>{item.CategoryName}</b></span></span>
+            <ul>
+              {item.subcategories.map(subcategory => (
+                <li key={subcategory._id}>{subcategory.CategoryName}</li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
     );
@@ -31,10 +37,22 @@ class App extends Component {
 
 const mapStateToProps = state => {
   const { categoriesReducer } = state;
-  const { rootCategories } = categoriesReducer;
+  const { rootCategories = {} } = categoriesReducer;
+
+  const entries = Object.entries(rootCategories);
+  const transformedRootCategories = entries.map(entry => {
+    const [id, properties] = entry;
+    const { CategoryName, subcategories = [] } = properties;
+
+    return {
+      id,
+      CategoryName,
+      subcategories,
+    }
+  });
 
   return {
-    rootCategories
+    rootCategories: transformedRootCategories
   }
 }
 
