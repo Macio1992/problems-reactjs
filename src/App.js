@@ -1,26 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchRootCategories } from './actions';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  static propTypes = {
+    rootCategories: PropTypes.array.isRequired,
+    dispatch: PropTypes.func.isRequired,
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchRootCategories());
+  }
+
+  render() {
+    const { rootCategories } = this.props;
+    return (
+      <div className="App">
+        { rootCategories.map(item => (
+          <div key={item.id}>
+            <span><b>{item.id}</b></span>:::
+            <span><span><b>{item.CategoryName}</b></span></span>
+            <ul>
+              {item.subcategories.map(subcategory => (
+                <li key={subcategory._id}>{subcategory.CategoryName}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  const { categoriesReducer } = state;
+  const { rootCategories = {} } = categoriesReducer;
+
+  const entries = Object.entries(rootCategories);
+  const transformedRootCategories = entries.map(entry => {
+    const [id, properties] = entry;
+    const { CategoryName, subcategories = [] } = properties;
+
+    return {
+      id,
+      CategoryName,
+      subcategories,
+    }
+  });
+
+  return {
+    rootCategories: transformedRootCategories
+  }
+}
+
+export default connect(mapStateToProps)(App);
