@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchRootCategories } from './actions';
+import { Container, Row, Col } from 'react-bootstrap';
+import Categories from './components/Categories';
 
 class App extends Component {
   static propTypes = {
@@ -18,19 +20,14 @@ class App extends Component {
   render() {
     const { rootCategories } = this.props;
     return (
-      <div className="App">
-        { rootCategories.map(item => (
-          <div key={item.id}>
-            <span><b>{item.id}</b></span>:::
-            <span><span><b>{item.CategoryName}</b></span></span>
-            <ul>
-              {item.subcategories.map(subcategory => (
-                <li key={subcategory._id}>{subcategory.CategoryName}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+      <Container fluid>
+        <Row>
+          <Col xs={3}>
+            <Categories rootCategories={rootCategories} />
+          </Col>
+          <Col xs={9}></Col>
+        </Row>
+      </Container>
     );
   }
 }
