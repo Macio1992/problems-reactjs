@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from 'react-bootstrap';
+import Modal from '../components/Modal';
 
 class Categories extends Component {
-
   createIndex = (id) => {
     return `acc-${id}`;
   }
 
   render() {
-    const { rootCategories } = this.props;
+    const { props } = this.props;
 
     return (
       <div className="App">
+        <Modal props={props} />
         <Accordion>
-          {rootCategories.map((item, i) => (
+          {props.rootCategories.map((item, i) => (
             <Card key={item.id}>
               <Card.Header>
                 <Accordion.Toggle variant="link" eventKey={this.createIndex(i)}>

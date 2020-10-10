@@ -18,14 +18,15 @@ class App extends Component {
   }
 
   render() {
-    const { rootCategories } = this.props;
     return (
       <Container fluid>
         <Row>
           <Col xs={3}>
-            <Categories rootCategories={rootCategories} />
+            <Categories props={this.props} />
           </Col>
-          <Col xs={9}></Col>
+          <Col xs={9}>
+            <button onClick={this.handleIncrement}>Increase</button>
+          </Col>
         </Row>
       </Container>
     );
@@ -49,7 +50,7 @@ const mapStateToProps = state => {
   });
 
   return {
-    rootCategories: transformedRootCategories
+    rootCategories: transformedRootCategories,
   }
 }
 

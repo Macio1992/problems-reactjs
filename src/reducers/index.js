@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 
 const initialState = {
-    rootCategories: {}
+    rootCategories: {},
+    problems: []
 }
 
 const categoriesReducer = (state = initialState, action) => {
@@ -41,13 +42,43 @@ const categoriesReducer = (state = initialState, action) => {
                 ...state,
                 rootCategories: rootCategoriesObject,
             }
+        case 'ADD_PROBLEM':
+            const { problem } = action.payload;
+            const { problems } = state;
+
+            const newProblems = problems.push(problem);
+
+            return {
+                ...state,
+                problems: newProblems
+            }
+        default:
+            return state;
+    }
+}
+
+const problemsReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case 'ADD_PROBLEM':
+            const { problem } = action.payload;
+            const { problems } = state;
+
+            const newProblems = problems.push(problem);
+
+            console.log('new Problem ', newProblems);
+
+            return {
+                ...state,
+                problems: newProblems
+            }
         default:
             return state;
     }
 }
 
 const rootReducer = combineReducers({
-    categoriesReducer
+    categoriesReducer,
+    problemsReducer
 });
 
 export default rootReducer;
