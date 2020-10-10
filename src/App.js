@@ -25,7 +25,6 @@ class App extends Component {
             <Categories props={this.props} />
           </Col>
           <Col xs={9}>
-            <button onClick={this.handleIncrement}>Increase</button>
           </Col>
         </Row>
       </Container>
@@ -50,7 +49,7 @@ const mapStateToProps = state => {
   });
 
   return {
-    rootCategories: transformedRootCategories,
+    rootCategories: transformedRootCategories
   }
 }
 

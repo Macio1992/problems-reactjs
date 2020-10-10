@@ -42,16 +42,6 @@ const categoriesReducer = (state = initialState, action) => {
                 ...state,
                 rootCategories: rootCategoriesObject,
             }
-        case 'ADD_PROBLEM':
-            const { problem } = action.payload;
-            const { problems } = state;
-
-            const newProblems = problems.push(problem);
-
-            return {
-                ...state,
-                problems: newProblems
-            }
         default:
             return state;
     }
@@ -60,12 +50,9 @@ const categoriesReducer = (state = initialState, action) => {
 const problemsReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_PROBLEM':
-            const { problem } = action.payload;
+            const { payload: problem } = action;
             const { problems } = state;
-
             const newProblems = problems.push(problem);
-
-            console.log('new Problem ', newProblems);
 
             return {
                 ...state,
