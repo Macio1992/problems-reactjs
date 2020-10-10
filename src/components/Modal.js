@@ -10,6 +10,11 @@ class ModalComponent extends Component {
     problem: {}
   }
 
+  componentDidMount() {
+    const { rootCategories } = this.props;
+    console.log('root cats ', rootCategories);
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -27,8 +32,8 @@ class ModalComponent extends Component {
       ProblemContent: this.state.problem.problemContent,
       ProblemSolution: this.state.problem.problemAnswer,
       ProblemType: 'SINGLE',
-      ProblemCategory: '5f81d4f455131d6791c8b27c',
-      ProblemSubCategory: '5f6f3f6ae6c51744442023ad'
+      ProblemCategory: this.state.problem.problemRootCategory,
+      ProblemSubCategory: this.state.problem.problemSubCategory
     };
 
     this.props.dispatch(dispatchAddProblem(problemToAdd));
@@ -49,9 +54,37 @@ class ModalComponent extends Component {
 
   handleChange = (event) => {
     this.setState({
-      ...this.state.problem,
-      [event.target.name]: event.target.value
+      problem: {
+        ...this.state.problem,
+        [event.target.name]: event.target.value
+      }
     });
+  }
+
+  getSubcategories() {
+    const { rootCategories } = this.props;
+    const category = rootCategories.find(cat => cat.id === this.state.problem.problemRootCategory) || {};
+    const { subcategories = [] } = category;
+
+    return subcategories;
+  }
+
+  renderSubcategories() {
+    const subcategories = this.getSubcategories();
+
+    if (this.state.problem.problemRootCategory) {
+      return (
+        <Form.Group controlId="validationCustom04">
+          <Form.Label>Choose subcategory</Form.Label>
+          <Form.Control as="select" custom name="problemSubCategory" onChange={this.handleChange}>
+            <option></option>
+            {subcategories.map(category => (
+              <option value={category._id} key={category._id}>{category.CategoryName}</option>
+            ))};
+          </Form.Control>
+        </Form.Group>
+      )
+    }
   }
 
   render() {
@@ -63,7 +96,7 @@ class ModalComponent extends Component {
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Modal heading {this.props.rootCategories.length}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
@@ -96,6 +129,16 @@ class ModalComponent extends Component {
                     Please provide Problem Answer
                 </Form.Control.Feedback>
                 </Form.Group>
+                <Form.Group controlId="validationCustom03">
+                  <Form.Label>Choose root category</Form.Label>
+                  <Form.Control as="select" custom name="problemRootCategory" onChange={this.handleChange}>
+                    <option></option>
+                    {this.props.rootCategories.map(category => (
+                      <option value={category.id} key={category.id}>{category.CategoryName}</option>
+                    ))};
+                  </Form.Control>
+                </Form.Group>
+                {this.renderSubcategories()}
               </Form.Row>
               <Button type="submit">Submit form</Button>
             </Form>
@@ -106,5 +149,24 @@ class ModalComponent extends Component {
   }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => {
+  const { categoriesReducer } = state;
+  const { rootCategories } = categoriesReducer;
+
+  const entries = Object.entries(rootCategories);
+  const transformedRootCategories = entries.map(entry => {
+    const [id, properties] = entry;
+    const { CategoryName, subcategories = [] } = properties;
+
+    return {
+      id,
+      CategoryName,
+      subcategories,
+    }
+  });
+
+  return {
+    rootCategories: transformedRootCategories
+  }
+};
 export default connect(mapStateToProps)(ModalComponent);
