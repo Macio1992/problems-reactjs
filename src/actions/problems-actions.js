@@ -6,7 +6,7 @@ export const ADD_PROBLEM = 'ADD_PROBLEM';
 
 export const addProblem = (problem) => ({
   type: ADD_PROBLEM,
-  payload: problem
+  payload: problem,
 });
 
 export const dispatchAddProblem = (problem) => async dispatch => {

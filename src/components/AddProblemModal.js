@@ -3,16 +3,11 @@ import { Button, Modal, Form, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { dispatchAddProblem } from '../actions/problems-actions';
 
-class ModalComponent extends Component {
+class AddProblemModal extends Component {
   state = {
     show: false,
     validated: false,
     problem: {}
-  }
-
-  componentDidMount() {
-    const { rootCategories } = this.props;
-    console.log('root cats ', rootCategories);
   }
 
   handleSubmit = (event) => {
@@ -91,12 +86,12 @@ class ModalComponent extends Component {
     return (
       <>
         <Button variant="primary" onClick={this.handleShow}>
-          Launch demo modal
+          Add problem
       </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading {this.props.rootCategories.length}</Modal.Title>
+            <Modal.Title>Add new problem</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
@@ -169,4 +164,4 @@ const mapStateToProps = state => {
     rootCategories: transformedRootCategories
   }
 };
-export default connect(mapStateToProps)(ModalComponent);
+export default connect(mapStateToProps)(AddProblemModal);

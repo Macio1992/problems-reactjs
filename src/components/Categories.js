@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from 'react-bootstrap';
-import Modal from '../components/Modal';
+import AddProblemModal from '../components/AddProblemModal';
 
 class Categories extends Component {
-  createIndex = (id) => {
-    return `acc-${id}`;
-  }
-
   render() {
     const { props } = this.props;
+    const { rootCategories } = props;
 
     return (
       <div className="App">
-        <Modal props={props} />
+        <AddProblemModal props={props} />
         <Accordion>
-          {props.rootCategories.map((item, i) => (
-            <Card key={item.id}>
+          {rootCategories.map(category => (
+            <Card key={category.id}>
               <Card.Header>
-                <Accordion.Toggle variant="link" eventKey={this.createIndex(i)}>
-                  <span><b>{item.CategoryName}</b></span>
+                <Accordion.Toggle variant="link" eventKey={`acc-${category.id}`}>
+                  <span><b>{category.CategoryName}</b></span>
                 </Accordion.Toggle>
               </Card.Header>
-              <Accordion.Collapse eventKey={this.createIndex(i)}>
+              <Accordion.Collapse eventKey={`acc-${category.id}`}>
                 <Card.Body>
                   <ul>
-                    {item.subcategories.map(subcategory => (
+                    {category.subcategories.map(subcategory => (
                       <li key={subcategory._id}>{subcategory.CategoryName}</li>
                     ))}
                   </ul>
