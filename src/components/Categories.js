@@ -4,12 +4,11 @@ import AddProblemModal from '../components/AddProblemModal';
 
 class Categories extends Component {
   render() {
-    const { props } = this.props;
-    const { rootCategories } = props;
+    const { rootCategories } = this.props;
 
     return (
       <div className="App">
-        <AddProblemModal props={props} />
+        <AddProblemModal />
         <Accordion>
           {rootCategories.map(category => (
             <Card key={category.id}>

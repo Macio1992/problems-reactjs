@@ -47,7 +47,7 @@ class AddProblemModal extends Component {
     });
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({
       problem: {
         ...this.state.problem,
@@ -87,7 +87,7 @@ class AddProblemModal extends Component {
       <>
         <Button variant="primary" onClick={this.handleShow}>
           Add problem
-      </Button>
+        </Button>
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>

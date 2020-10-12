@@ -22,7 +22,7 @@ class App extends Component {
       <Container fluid>
         <Row>
           <Col xs={3}>
-            <Categories props={this.props} />
+            <Categories rootCategories={this.props.rootCategories} />
           </Col>
           <Col xs={9}>
           </Col>

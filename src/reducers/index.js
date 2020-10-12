@@ -52,11 +52,11 @@ const problemsReducer = (state = initialState, action) => {
         case 'ADD_PROBLEM':
             const { payload: problem } = action;
             const { problems } = state;
-            const newProblems = problems.push(problem);
+            problems.push(problem);
 
             return {
                 ...state,
-                problems: newProblems
+                problems
             }
         default:
             return state;
