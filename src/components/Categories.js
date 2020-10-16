@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from 'react-bootstrap';
-import AddProblemModal from '../components/AddProblemModal';
+import AddProblemModal from './AddProblemModal';
 
 class Categories extends Component {
+  showProblems(id) {
+    this.props.showProblems(id);
+  }
+
   render() {
     const { rootCategories } = this.props;
 
@@ -21,7 +25,10 @@ class Categories extends Component {
                 <Card.Body>
                   <ul>
                     {category.subcategories.map(subcategory => (
-                      <li key={subcategory._id}>{subcategory.CategoryName}</li>
+                      <li
+                        key={subcategory._id}
+                        onClick={() => this.showProblems(subcategory._id)}>
+                        {subcategory.CategoryName}</li>
                     ))}
                   </ul>
                 </Card.Body>
