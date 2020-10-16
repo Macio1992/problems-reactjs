@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, Form, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { dispatchAddProblem } from '../actions/problems-actions';
+import { dispatchAddProblem } from '../Actions/ActionsProblems';
 
 class AddProblemModal extends Component {
   state = {
@@ -31,7 +31,7 @@ class AddProblemModal extends Component {
       ProblemSubCategory: this.state.problem.problemSubCategory
     };
 
-    this.props.dispatch(dispatchAddProblem(problemToAdd));
+    this.props.dispatch(dispatchAddProblem(problemToAdd, this.state.problem.problemSubCategory));
     this.handleClose();
   };
 
