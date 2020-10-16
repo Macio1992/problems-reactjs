@@ -29,18 +29,19 @@ class App extends Component {
   }
 
   render() {
-    const { problems } = this.props;
+    const { problems, rootCategories } = this.props;
+    const { subcategoryId } = this.state;
 
     return (
       <Container fluid>
         <Row>
           <Col xs={3}>
-            <Categories showProblems={this.showProblems} rootCategories={this.props.rootCategories} />
+            <Categories showProblems={this.showProblems} rootCategories={rootCategories} />
           </Col>
           <Col xs={9}>
             {
-              (problems && this.state.subcategoryId && problems[this.state.subcategoryId]) &&
-              problems[this.state.subcategoryId].map(problem => (
+              (problems && subcategoryId && problems[subcategoryId]) &&
+              problems[subcategoryId].map(problem => (
                 <div className="problem" key={problem._id || 'id'}>
                   <p>Problem Content: {problem.ProblemContent}</p>
                   <p>Problem Answer: {problem.ProblemSolution}</p>

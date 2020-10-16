@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from 'react-bootstrap';
 import AddProblemModal from './AddProblemModal';
-// import { connect } from 'react-redux';
 
 class Categories extends Component {
   showProblems(id) {
