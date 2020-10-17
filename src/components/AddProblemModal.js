@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { dispatchAddProblem } from '../Actions/ActionsProblems';
+import './AddProblemModal.scss';
 
 class AddProblemModal extends Component {
   state = {

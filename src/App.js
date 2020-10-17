@@ -6,6 +6,8 @@ import { fetchRootCategories } from './Actions/ActionsCategories';
 import { dispatchReceiveProblemsBySubcategory } from './Actions/ActionsProblems';
 import { Container, Row, Col } from 'react-bootstrap';
 import Categories from './Components/Categories';
+import AddProblemModal from './Components/AddProblemModal';
+import './App.scss';
 
 class App extends Component {
   state = {
@@ -35,10 +37,11 @@ class App extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col xs={3}>
+          <Col xs={2}>
             <Categories showProblems={this.showProblems} rootCategories={rootCategories} />
           </Col>
-          <Col xs={9}>
+          <Col xs={10} className="problems__side">
+            <AddProblemModal />
             {
               (problems && subcategoryId && problems[subcategoryId]) &&
               problems[subcategoryId].map(problem => (
