@@ -20,4 +20,16 @@ $purple-color: #7e38d8;
       background-color: $purple-color;
     }
   }
+
+  .problem {
+    width: 50%;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid $purple-color;
+    border-radius: 5px;
+
+    .problem__removeIcon {
+      cursor: pointer;
+    }
+  }
 }

@@ -27,6 +27,18 @@ const problemsReducer = (state = initialState, action) => {
         ...state,
         problems
       }
+
+    case 'DELETE_PROBLEM':
+      const { idToRemove, subcategoryId: subcategoryIdToRemove } = action.payload;
+      problems = state.problems;
+
+      const filteredProblems = problems[subcategoryIdToRemove].filter(problem => problem._id !== idToRemove);
+      problems[subcategoryIdToRemove] = filteredProblems;
+
+      return {
+        ...state,
+        problems
+      }
     default:
       return state;
   }
