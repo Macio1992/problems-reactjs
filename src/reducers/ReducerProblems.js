@@ -39,6 +39,14 @@ const problemsReducer = (state = initialState, action) => {
         ...state,
         problems
       }
+
+    case 'SET_SELECTED_SUBCATEGORY':
+      const { selectedCategoryId } = action.payload;
+
+      return {
+        ...state,
+        selectedSubCategory: selectedCategoryId
+      }
     default:
       return state;
   }
