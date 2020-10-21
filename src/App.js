@@ -10,9 +10,9 @@ import {
 } from './Actions/ActionsProblems';
 import { Container, Row, Col } from 'react-bootstrap';
 import Categories from './Components/Categories';
-import AddProblemModal from './Components/AddProblemModal';
 import './App.scss';
 import Problems from './Components/Problems';
+import ModalFunction from './Components/ModalFunction';
 
 class App extends Component {
   static propTypes = {
@@ -37,7 +37,7 @@ class App extends Component {
   }
 
   render() {
-    const { problems, rootCategories, selectedSubCategory } = this.props;
+    const { rootCategories } = this.props;
 
     return (
       <Container fluid>
@@ -46,8 +46,8 @@ class App extends Component {
             <Categories showProblems={this.showProblems} rootCategories={rootCategories} />
           </Col>
           <Col xs={10} className="problems__side">
-            <AddProblemModal />
-            <Problems problems={problems} selectedSubCategory={selectedSubCategory} />
+            <ModalFunction openModalElement={<span>Add problem</span>} />
+            <Problems />
           </Col>
         </Row>
       </Container>
@@ -56,9 +56,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { categoriesReducer, problemsReducer } = state;
+  const { categoriesReducer } = state;
   const { rootCategories = {} } = categoriesReducer;
-  const { problems = {}, selectedSubCategory = '' } = problemsReducer;
 
   const entries = Object.entries(rootCategories);
   const transformedRootCategories = entries.map(entry => {
@@ -74,8 +73,6 @@ const mapStateToProps = state => {
 
   return {
     rootCategories: transformedRootCategories,
-    problems,
-    selectedSubCategory
   }
 }
 

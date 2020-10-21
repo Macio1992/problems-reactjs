@@ -18,14 +18,11 @@ const problemsReducer = (state = initialState, action) => {
         problems
       }
     case 'RECEIVE_PROBLEMS_BY_SUBCATEGORY':
-      const { problems: problemsBySubcategory, subcategoryId } = action.payload;
-      problems = state.problems;
-
-      problems[subcategoryId] = [...problemsBySubcategory];
+      const { problems: problemsBySubcategory } = action.payload;
 
       return {
         ...state,
-        problems
+        problems: problemsBySubcategory
       }
 
     case 'DELETE_PROBLEM':

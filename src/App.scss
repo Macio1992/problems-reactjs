@@ -1,26 +1,6 @@
 $purple-color: #7e38d8;
 
 .problems__side {
-  position: relative;
-
-  button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: $purple-color;
-    border: none;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-
-    &:focus {
-      background-color: $purple-color !important;
-    }
-
-    &:hover {
-      background-color: $purple-color;
-    }
-  }
-
   .problem {
     width: 50%;
     margin: 20px 0;

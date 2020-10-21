@@ -10,8 +10,7 @@ export const SET_SELECTED_SUBCATEGORY = 'SET_SELECTED_SUBCATEGORY';
 export const receiveProblemsBySubcategory = (problems, subcategoryId) => ({
   type: RECEIVE_PROBLEMS_BY_SUBCATEGORY,
   payload: {
-    problems,
-    subcategoryId
+    problems
   },
 });
 
@@ -50,7 +49,7 @@ export const dispatchAddProblem = (problem, subcategoryId) => async dispatch => 
 export const dispatchReceiveProblemsBySubcategory = subcategoryId => async dispatch => {
   try {
     const problemsBySubcategory = await axios.get(`${SERVER_URL}/api/problems/subcategory/${subcategoryId}`);
-    dispatch(receiveProblemsBySubcategory(problemsBySubcategory.data, subcategoryId));
+    dispatch(receiveProblemsBySubcategory(problemsBySubcategory.data));
   } catch (err) {
     console.error(err);
   }

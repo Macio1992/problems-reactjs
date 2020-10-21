@@ -1,7 +1,8 @@
 const initialState = {
   rootCategories: {},
-  problems: {},
-  selectedSubCategory: ''
+  problems: [],
+  selectedSubCategory: '',
+  showModal: false
 }
 
 export default initialState;
