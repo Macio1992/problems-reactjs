@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import { fetchRootCategories } from './Actions/ActionsCategories';
 import {
   dispatchReceiveProblemsBySubcategory,
-  dispatchDeleteProblem,
-  dispatchSetSelectedSubcategory
+  dispatchDeleteProblem
 } from './Actions/ActionsProblems';
 import { Container, Row, Col } from 'react-bootstrap';
 import Categories from './Components/Categories';
@@ -27,7 +26,6 @@ class App extends Component {
 
   showProblems = (id) => {
     const { dispatch } = this.props;
-    dispatch(dispatchSetSelectedSubcategory(id));
     dispatch(dispatchReceiveProblemsBySubcategory(id));
   }
 

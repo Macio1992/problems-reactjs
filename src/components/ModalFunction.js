@@ -44,7 +44,9 @@ const ModalFunction = props => {
 
   const getSubcategories = () => {
     const { rootCategories } = props;
-    const category = rootCategories.find(cat => cat.id === problem.ProblemCategory) || {};
+    const category = rootCategories.find(cat => {
+      return cat.id === problem.ProblemCategory
+    }) || {};
     const { subcategories = [] } = category;
 
     return subcategories;
@@ -117,7 +119,7 @@ const ModalFunction = props => {
                 <Form.Control as="select" custom name="ProblemCategory" onChange={handleChange} defaultValue={problem.ProblemCategory || ''}>
                   <option></option>
                   {props.rootCategories.map(category => (
-                    <option value={category.id} key={category.id}>{category.CategoryName} - {category.id}</option>
+                    <option value={category.id} key={category.id}>{category.CategoryName}</option>
                   ))};
                   </Form.Control>
               </Form.Group>
