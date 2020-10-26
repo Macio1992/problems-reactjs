@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { dispatchAddProblem } from '../Actions/ActionsProblems';
+import { dispatchAddProblem, dispatchEditProblem } from '../Actions/ActionsProblems';
 
 const ModalFunction = props => {
   const [show, setShow] = useState(false);
@@ -31,8 +31,15 @@ const ModalFunction = props => {
       ProblemSubCategory: problem.ProblemSubCategory
     };
 
-    props.dispatch(dispatchAddProblem(problemToAdd, problem.ProblemSubCategory));
-    handleClose();
+    if (props.mode === 'EDIT') {
+      console.log('EDIT');
+      props.dispatch(dispatchEditProblem(problem._id, problemToAdd));
+      handleClose();
+      props.reset(problemToAdd, problem._id);
+    } else if (props.mode === 'ADD') {
+      props.dispatch(dispatchAddProblem(problemToAdd, problem.ProblemSubCategory));
+      handleClose();
+    }
   };
 
   const handleChange = event => {
@@ -44,9 +51,7 @@ const ModalFunction = props => {
 
   const getSubcategories = () => {
     const { rootCategories } = props;
-    const category = rootCategories.find(cat => {
-      return cat.id === problem.ProblemCategory
-    }) || {};
+    const category = rootCategories.find(cat => cat.id === problem.ProblemCategory) || {};
     const { subcategories = [] } = category;
 
     return subcategories;
@@ -159,7 +164,9 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     rootCategories: transformedRootCategories,
-    problem: ownProps.problem || {}
+    problem: ownProps.problem || {},
+    mode: ownProps.mode || 'ADD',
+    reset: ownProps.reset
   }
 };
 

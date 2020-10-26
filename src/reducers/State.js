@@ -1,7 +1,6 @@
 const initialState = {
   rootCategories: {},
   problems: [],
-  selectedSubCategory: '',
   showModal: false
 }
 
