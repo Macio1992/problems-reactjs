@@ -7,7 +7,6 @@ import { dispatchDeleteProblem } from '../Actions/ActionsProblems';
 
 class Problems extends Component {
   deleteProblem(id, subcategoryId) {
-    console.log('id ', id, ', subcategoryId ', subcategoryId);
     this.props.dispatch(dispatchDeleteProblem(id, subcategoryId));
   }
 
