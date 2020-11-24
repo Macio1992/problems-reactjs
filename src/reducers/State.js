@@ -1,6 +1,6 @@
 const initialState = {
   rootCategories: {},
-  problems: {},
+  problems: [],
 }
 
 export default initialState;
