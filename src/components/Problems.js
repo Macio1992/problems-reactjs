@@ -3,13 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import ModalFunction from './ModalFunction';
 import { connect } from "react-redux";
-import { dispatchReceiveProblemsBySubcategory } from '../Actions/ActionsProblems';
+import { dispatchDeleteProblem } from '../Actions/ActionsProblems';
 
 class Problems extends Component {
-  reset(problemToEdit, id) {
-    setTimeout(() => {
-      this.props.dispatch(dispatchReceiveProblemsBySubcategory(problemToEdit.ProblemSubCategory));
-    }, 0);
+  deleteProblem(id, subcategoryId) {
+    console.log('id ', id, ', subcategoryId ', subcategoryId);
+    this.props.dispatch(dispatchDeleteProblem(id, subcategoryId));
   }
 
   render() {
@@ -17,7 +16,6 @@ class Problems extends Component {
 
     return (
       <div className="d-flex flex-wrap">
-        <button onClick={this.reset.bind(this)}>Update</button>
         {
           problems.map(problem => (
             <div className="problem" key={problem._id || 'id'}>
@@ -26,12 +24,11 @@ class Problems extends Component {
               <p><b>Problem Answer:</b> {problem.ProblemSolution}</p>
               <p><b>ProblemSubCategory:</b> {problem.ProblemSubCategory}</p>
               <p><b>ProblemCategory:</b> {problem.ProblemCategory}</p>
-              <FontAwesomeIcon onClick={() => this.deleteProblem(problem._id)} className="problem__removeIcon" icon={faTrash} />
+              <FontAwesomeIcon onClick={() => this.deleteProblem(problem._id, problem.ProblemSubCategory)} className="problem__removeIcon" icon={faTrash} />
               <ModalFunction
                 problem={problem}
                 openModalElement={<FontAwesomeIcon className="problem__editIcon" icon={faEdit} />}
                 mode='EDIT'
-                reset={this.reset.bind(this)}
               />
             </div>
           ))
@@ -46,7 +43,7 @@ const mapStateToProps = state => {
   const { problems } = problemsReducer;
 
   return {
-    problems,
+    problems
   }
 }
 

@@ -31,14 +31,16 @@ const ModalFunction = props => {
       ProblemSubCategory: problem.ProblemSubCategory
     };
 
-    if (props.mode === 'EDIT') {
-      console.log('EDIT');
-      props.dispatch(dispatchEditProblem(problem._id, problemToAdd));
-      handleClose();
-      props.reset(problemToAdd, problem._id);
-    } else if (props.mode === 'ADD') {
-      props.dispatch(dispatchAddProblem(problemToAdd, problem.ProblemSubCategory));
-      handleClose();
+    handleClose();
+    switch (props.mode) {
+      case 'EDIT':
+        props.dispatch(dispatchEditProblem(problem._id, problemToAdd));
+        break;
+      case 'ADD':
+        props.dispatch(dispatchAddProblem(problemToAdd, problem.ProblemSubCategory));
+        break;
+      default:
+        break;
     }
   };
 
@@ -76,15 +78,15 @@ const ModalFunction = props => {
   }
 
   return (
-    <>
+    <div>
       <div onClick={handleShow}>
-        {props.openModalElement}
+      {props.openModalElement}
       </div>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            Modal heading
-          </Modal.Title>
+      <Modal.Header closeButton>
+        <Modal.Title>
+          Modal heading
+        </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -142,7 +144,7 @@ const ModalFunction = props => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 
@@ -165,8 +167,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     rootCategories: transformedRootCategories,
     problem: ownProps.problem || {},
-    mode: ownProps.mode || 'ADD',
-    reset: ownProps.reset
+    mode: ownProps.mode || 'ADD'
   }
 };
 

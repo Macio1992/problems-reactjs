@@ -27,28 +27,24 @@ const problemsReducer = (state = initialState, action) => {
 
     case 'DELETE_PROBLEM':
       const { idToRemove, subcategoryId: subcategoryIdToRemove } = action.payload;
+      console.log('idToRemove ', idToRemove, ', subcategoryIdToRemove ', subcategoryIdToRemove);
       problems = state.problems;
 
-      // const filteredProblems = problems[subcategoryIdToRemove].filter(problem => problem._id !== idToRemove);
-      // problems[subcategoryIdToRemove] = filteredProblems;
+      const filteredProblems = problems.filter(problem => problem._id !== idToRemove);
 
       return {
         ...state,
-        problems
+        problems: filteredProblems
       }
     case 'EDIT_PROBLEM':
       const { idToEdit, problemToEdit } = action.payload;
 
-      // console.log('REDUCER idToEdit ', idToEdit, ', problemstoedit ', problemToEdit);
       problems = state.problems;
-      const findProblemIndex = problems.findIndex(problem => problem._id === idToEdit);
-      problems[findProblemIndex] = problemToEdit;
-
-      console.log('problems ', problems);
+      const newProblems = problems.map(problem => problem._id === idToEdit ? problemToEdit : problem);
 
       return {
         ...state,
-        problems
+        problems: newProblems
       }
 
     default:
