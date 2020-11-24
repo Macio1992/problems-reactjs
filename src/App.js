@@ -3,15 +3,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchRootCategories } from './Actions/ActionsCategories';
-import { dispatchReceiveProblemsBySubcategory } from './Actions/ActionsProblems';
+import {
+  dispatchReceiveProblemsBySubcategory,
+  dispatchDeleteProblem
+} from './Actions/ActionsProblems';
 import { Container, Row, Col } from 'react-bootstrap';
 import Categories from './Components/Categories';
+import './App.scss';
+import Problems from './Components/Problems';
+import ModalFunction from './Components/ModalFunction';
 
 class App extends Component {
-  state = {
-    subcategoryId: ''
-  }
-
   static propTypes = {
     rootCategories: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
@@ -24,30 +26,26 @@ class App extends Component {
 
   showProblems = (id) => {
     const { dispatch } = this.props;
-    this.setState({ subcategoryId: id });
     dispatch(dispatchReceiveProblemsBySubcategory(id));
   }
 
+  deleteProblem = id => {
+    const { dispatch } = this.props;
+    dispatch(dispatchDeleteProblem(id, this.state.subcategoryId));
+  }
+
   render() {
-    const { problems, rootCategories } = this.props;
-    const { subcategoryId } = this.state;
+    const { rootCategories } = this.props;
 
     return (
       <Container fluid>
         <Row>
-          <Col xs={3}>
+          <Col xs={2}>
             <Categories showProblems={this.showProblems} rootCategories={rootCategories} />
           </Col>
-          <Col xs={9}>
-            {
-              (problems && subcategoryId && problems[subcategoryId]) &&
-              problems[subcategoryId].map(problem => (
-                <div className="problem" key={problem._id || 'id'}>
-                  <p>Problem Content: {problem.ProblemContent}</p>
-                  <p>Problem Answer: {problem.ProblemSolution}</p>
-                </div>
-              ))
-            }
+          <Col xs={10} className="problems__side">
+            <ModalFunction openModalElement={<span>Add problem</span>} />
+            <Problems />
           </Col>
         </Row>
       </Container>
@@ -56,9 +54,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { categoriesReducer, problemsReducer } = state;
+  const { categoriesReducer } = state;
   const { rootCategories = {} } = categoriesReducer;
-  const { problems = {} } = problemsReducer;
 
   const entries = Object.entries(rootCategories);
   const transformedRootCategories = entries.map(entry => {
@@ -74,7 +71,6 @@ const mapStateToProps = state => {
 
   return {
     rootCategories: transformedRootCategories,
-    problems
   }
 }
 

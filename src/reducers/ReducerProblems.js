@@ -18,15 +18,35 @@ const problemsReducer = (state = initialState, action) => {
         problems
       }
     case 'RECEIVE_PROBLEMS_BY_SUBCATEGORY':
-      const { problems: problemsBySubcategory, subcategoryId } = action.payload;
-      problems = state.problems;
-
-      problems[subcategoryId] = [...problemsBySubcategory];
+      const { problems: problemsBySubcategory } = action.payload;
 
       return {
         ...state,
-        problems
+        problems: problemsBySubcategory
       }
+
+    case 'DELETE_PROBLEM':
+      const { idToRemove, subcategoryId: subcategoryIdToRemove } = action.payload;
+      console.log('idToRemove ', idToRemove, ', subcategoryIdToRemove ', subcategoryIdToRemove);
+      problems = state.problems;
+
+      const filteredProblems = problems.filter(problem => problem._id !== idToRemove);
+
+      return {
+        ...state,
+        problems: filteredProblems
+      }
+    case 'EDIT_PROBLEM':
+      const { idToEdit, problemToEdit } = action.payload;
+
+      problems = state.problems;
+      const newProblems = problems.map(problem => problem._id === idToEdit ? problemToEdit : problem);
+
+      return {
+        ...state,
+        problems: newProblems
+      }
+
     default:
       return state;
   }
