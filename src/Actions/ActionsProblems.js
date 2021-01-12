@@ -30,11 +30,13 @@ export const deleteProblem = (idToRemove, subcategoryId) => ({
   }
 });
 
-export const editProblem = (idToEdit, problemToEdit) => ({
+export const editProblem = (idToEdit, problemToEdit, categoryIdBeforeEdit, subcategoryIdBeforeEdit) => ({
   type: EDIT_PROBLEM,
   payload: {
     idToEdit,
-    problemToEdit
+    problemToEdit,
+    categoryIdBeforeEdit,
+    subcategoryIdBeforeEdit
   }
 });
 
@@ -65,10 +67,10 @@ export const dispatchDeleteProblem = (id, subcategoryId) => async dispatch => {
   }
 }
 
-export const dispatchEditProblem = (id, problem) => async dispatch => {
+export const dispatchEditProblem = (id, problem, categoryIdBeforeEdit, subcategoryIdBeforeEdit) => async dispatch => {
   try {
     await axios.put(`${SERVER_URL}/api/problems/${id}`, problem);
-    dispatch(editProblem(id, problem));
+    dispatch(editProblem(id, problem, categoryIdBeforeEdit, subcategoryIdBeforeEdit));
   } catch (err) {
     console.error(err);
   }
