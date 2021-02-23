@@ -78,15 +78,15 @@ const ModalFunction = props => {
   }
 
   return (
-    <div>
+    <>
       <div onClick={handleShow}>
-      {props.openModalElement}
+      { props.showModalElement && props.openModalElement}
       </div>
       <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          Modal heading
-        </Modal.Title>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Modal heading
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -144,7 +144,7 @@ const ModalFunction = props => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 }
 
@@ -167,7 +167,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     rootCategories: transformedRootCategories,
     problem: ownProps.problem || {},
-    mode: ownProps.mode || 'ADD'
+    mode: ownProps.mode || 'ADD',
+    showModalElement: ownProps.showModalElement || false,
   }
 };
 

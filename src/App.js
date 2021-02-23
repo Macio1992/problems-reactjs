@@ -44,7 +44,7 @@ class App extends Component {
             <Categories showProblems={this.showProblems} rootCategories={rootCategories} />
           </Col>
           <Col xs={10} className="problems__side">
-            <ModalFunction openModalElement={<span>Add problem</span>} />
+            <ModalFunction showModalElement={false} openModalElement={<span>Add problem</span>} />
             <Problems />
           </Col>
         </Row>
