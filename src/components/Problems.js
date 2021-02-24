@@ -16,7 +16,7 @@ class Problems extends Component {
     const { problems } = this.props;
 
     return (
-      <Container>
+      <Container fluid>
         <Row>
           {
             problems.map(problem => (

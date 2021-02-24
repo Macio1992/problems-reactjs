@@ -1,0 +1,26 @@
+.card {
+    background-color: #f7c600;
+    .card-header {
+        button {
+            background-color: transparent;
+            border: 0;
+            width: 100%;
+        }
+    }
+
+    .card-body {
+        background-color: white;
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+            text-align: center;
+
+            li {
+                padding: 10px 0;
+                cursor: pointer;
+            }
+        }
+    }
+}

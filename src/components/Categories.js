@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Accordion, Card } from 'react-bootstrap';
+import './Categories.scss';
 
 class Categories extends Component {
   showProblems(id) {
