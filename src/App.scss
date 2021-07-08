@@ -1,15 +1,15 @@
-$purple-color: #7e38d8;
+$purple-color: #f7c600;
 
 .problems__side {
   .problem {
-    width: 33%;
     margin: 20px 0;
-    padding: 20px;
+    padding: 10px 26px;
     border: 1px solid $purple-color;
     border-radius: 5px;
 
-    .problem__removeIcon {
+    .problem__removeIcon, .problem__editIcon {
       cursor: pointer;
+      margin-bottom: 20px;
     }
   }
 }

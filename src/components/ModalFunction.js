@@ -34,7 +34,11 @@ const ModalFunction = props => {
     handleClose();
     switch (props.mode) {
       case 'EDIT':
-        props.dispatch(dispatchEditProblem(problem._id, problemToAdd));
+        props.dispatch(dispatchEditProblem(
+          problem._id,
+          problemToAdd,
+          problemToEdit.ProblemCategory,
+          problemToEdit.ProblemSubCategory));
         break;
       case 'ADD':
         props.dispatch(dispatchAddProblem(problemToAdd, problem.ProblemSubCategory));
@@ -66,7 +70,7 @@ const ModalFunction = props => {
       return (
         <Form.Group controlId="validationCustom04">
           <Form.Label>Choose subcategory</Form.Label>
-          <Form.Control as="select" custom name="ProblemSubCategory" onChange={handleChange} defaultValue={problem.ProblemSubCategory || ''}>
+          <Form.Control required as="select" custom name="ProblemSubCategory" onChange={handleChange} defaultValue={problem.ProblemSubCategory || ''}>
             <option></option>
             {subcategories.map(category => (
               <option value={category._id} key={category._id}>{category.CategoryName}</option>
@@ -78,15 +82,15 @@ const ModalFunction = props => {
   }
 
   return (
-    <div>
+    <>
       <div onClick={handleShow}>
-      {props.openModalElement}
+      { props.showModalElement && props.openModalElement}
       </div>
       <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          Modal heading
-        </Modal.Title>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Modal heading
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -123,7 +127,7 @@ const ModalFunction = props => {
               </Form.Group>
               <Form.Group controlId="validationCustom03">
                 <Form.Label>Choose root category</Form.Label>
-                <Form.Control as="select" custom name="ProblemCategory" onChange={handleChange} defaultValue={problem.ProblemCategory || ''}>
+                <Form.Control required as="select" custom name="ProblemCategory" onChange={handleChange} defaultValue={problem.ProblemCategory || ''}>
                   <option></option>
                   {props.rootCategories.map(category => (
                     <option value={category.id} key={category.id}>{category.CategoryName}</option>
@@ -135,16 +139,8 @@ const ModalFunction = props => {
             <Button type="submit">Submit form</Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 }
 
@@ -167,7 +163,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     rootCategories: transformedRootCategories,
     problem: ownProps.problem || {},
-    mode: ownProps.mode || 'ADD'
+    mode: ownProps.mode || 'ADD',
+    showModalElement: ownProps.showModalElement || false,
   }
 };
 

@@ -37,10 +37,21 @@ const problemsReducer = (state = initialState, action) => {
         problems: filteredProblems
       }
     case 'EDIT_PROBLEM':
-      const { idToEdit, problemToEdit } = action.payload;
+      const { idToEdit, problemToEdit, categoryIdBeforeEdit, subcategoryIdBeforeEdit } = action.payload;
+      const { ProblemCategory: categoryIdAfterEdit, ProblemSubCategory: subcategoryIdAfterEdit } = problemToEdit;
 
       problems = state.problems;
-      const newProblems = problems.map(problem => problem._id === idToEdit ? problemToEdit : problem);
+      let newProblems = problems.map(problem => {
+        return (problem._id === idToEdit)? problemToEdit : problem
+      });
+
+      if (subcategoryIdBeforeEdit !== subcategoryIdAfterEdit) {
+        newProblems = newProblems.filter(p => p.ProblemSubCategory === subcategoryIdBeforeEdit);
+      }
+
+      if (categoryIdBeforeEdit !== categoryIdAfterEdit) {
+        newProblems = newProblems.filter(p => p.ProblemCategory === categoryIdBeforeEdit);
+      }
 
       return {
         ...state,
